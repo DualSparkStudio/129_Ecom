@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { scrollReveal } from '../../hooks/useScrollReveal';
+import { scrollReveal, viewport } from '../../hooks/useScrollReveal';
+import { cn } from '../../utils/cn';
 
 export function SectionHeading({
   label,
@@ -10,32 +11,38 @@ export function SectionHeading({
 }) {
   const alignClass =
     align === 'center'
-      ? 'text-center mx-auto'
+      ? 'text-center mx-auto items-center'
       : align === 'left'
-        ? 'text-left'
-        : 'text-right';
+        ? 'text-left items-start'
+        : 'text-right items-end';
 
   return (
-    <motion.div
+    <motion.header
       variants={scrollReveal}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: '-80px' }}
-      className={`max-w-2xl mb-12 md:mb-16 ${alignClass} ${className}`}
-    >
-      {label && (
-        <span className="inline-block text-electric-light text-sm font-medium tracking-widest uppercase mb-3">
-          {label}
-        </span>
+      viewport={viewport}
+      className={cn(
+        'flex flex-col max-w-2xl mb-14 sm:mb-16 md:mb-20',
+        alignClass,
+        className
       )}
-      <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-gradient mb-4">
+    >
+      {label && <span className="label-premium mb-4 sm:mb-5">{label}</span>}
+      <h2 className="font-display text-display-md font-bold text-gradient text-balance mb-4 sm:mb-5">
         {title}
       </h2>
       {description && (
-        <p className="text-white/60 text-base md:text-lg leading-relaxed">
+        <p className="text-base sm:text-lg text-white/55 leading-relaxed max-w-prose text-balance">
           {description}
         </p>
       )}
-    </motion.div>
+      {align === 'center' && (
+        <div
+          className="mt-6 sm:mt-8 w-12 h-px bg-gradient-to-r from-transparent via-electric/50 to-transparent"
+          aria-hidden
+        />
+      )}
+    </motion.header>
   );
 }

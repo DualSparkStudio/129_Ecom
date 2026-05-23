@@ -17,6 +17,7 @@ import { formatPrice } from '../utils/formatPrice';
 import { Button } from '../components/ui/Button';
 import { ProductCard } from '../components/ui/ProductCard';
 import { LazyImage } from '../components/ui/LazyImage';
+import { easePremium } from '../hooks/useScrollReveal';
 
 const productReviews = [
   {
@@ -71,23 +72,24 @@ export function ProductPage() {
   };
 
   return (
-    <div className="pt-24 pb-20">
-      <div className="container-custom px-4 sm:px-6 lg:px-8">
+    <div className="pt-28 sm:pt-32 pb-24 sm:pb-28">
+      <div className="container-custom px-5 sm:px-8 lg:px-10">
         <Link
           to="/#shop"
-          className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-white/50 hover:text-white text-sm font-medium mb-10 sm:mb-12 transition-colors duration-300"
         >
-          <ChevronLeft className="w-4 h-4" />
+          <ChevronLeft className="w-4 h-4" strokeWidth={1.5} />
           Back to Shop
         </Link>
 
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 mb-20">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 mb-20 sm:mb-28">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
-            className="space-y-4"
+            transition={{ duration: 0.65, ease: easePremium }}
+            className="space-y-4 sm:space-y-5"
           >
-            <div className="aspect-square rounded-2xl overflow-hidden glass">
+            <div className="aspect-square rounded-2xl sm:rounded-3xl overflow-hidden glass-strong shadow-card">
               <LazyImage
                 src={images[activeImage]}
                 alt={product.name}
@@ -100,10 +102,10 @@ export function ProductPage() {
                   key={img}
                   type="button"
                   onClick={() => setActiveImage(i)}
-                  className={`flex-shrink-0 w-20 h-20 rounded-xl overflow-hidden ring-2 transition-all ${
+                  className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden ring-2 transition-all duration-300 ${
                     i === activeImage
-                      ? 'ring-electric'
-                      : 'ring-transparent opacity-60 hover:opacity-100'
+                      ? 'ring-electric shadow-glow-sm'
+                      : 'ring-transparent opacity-55 hover:opacity-100'
                   }`}
                 >
                   <img
@@ -117,19 +119,18 @@ export function ProductPage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
+            initial={{ opacity: 0, x: 16 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col"
+            transition={{ duration: 0.65, delay: 0.08, ease: easePremium }}
+            className="flex flex-col lg:py-4"
           >
             {product.badge && (
-              <span className="inline-flex self-start px-3 py-1 text-xs font-medium rounded-full bg-electric/20 text-electric-light mb-4">
+              <span className="inline-flex self-start px-3 py-1.5 text-[11px] font-semibold tracking-wide uppercase rounded-full bg-electric/15 text-electric-light border border-electric/20 mb-5">
                 {product.badge}
               </span>
             )}
-            <p className="text-electric-light text-sm uppercase tracking-wider mb-2">
-              {product.category}
-            </p>
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
+            <p className="label-premium mb-4">{product.category}</p>
+            <h1 className="font-display text-display-md font-bold mb-5 sm:mb-6 text-balance">
               {product.name}
             </h1>
 
@@ -151,18 +152,18 @@ export function ProductPage() {
               </span>
             </div>
 
-            <div className="flex items-baseline gap-3 mb-6">
-              <span className="text-3xl font-bold">
+            <div className="flex items-baseline gap-3 mb-8">
+              <span className="text-3xl sm:text-4xl font-bold tabular-nums tracking-tight">
                 {formatPrice(product.price)}
               </span>
               {product.originalPrice && (
-                <span className="text-xl text-white/40 line-through">
+                <span className="text-lg text-white/35 line-through tabular-nums">
                   {formatPrice(product.originalPrice)}
                 </span>
               )}
             </div>
 
-            <p className="text-white/60 leading-relaxed mb-8">
+            <p className="text-white/55 leading-relaxed mb-10 text-[15px] sm:text-base max-w-prose">
               {product.description}
             </p>
 
@@ -208,7 +209,7 @@ export function ProductPage() {
               Add to Cart — {formatPrice(product.price * quantity)}
             </Button>
 
-            <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10">
+            <div className="grid grid-cols-3 gap-3 sm:gap-4 pt-8 border-t border-white/[0.06]">
               {[
                 { icon: Truck, label: 'Free Express Shipping' },
                 { icon: Shield, label: '2-Year Warranty' },
@@ -216,10 +217,10 @@ export function ProductPage() {
               ].map(({ icon: Icon, label }) => (
                 <div
                   key={label}
-                  className="flex flex-col items-center text-center gap-2"
+                  className="flex flex-col items-center text-center gap-2.5 p-3 rounded-2xl glass"
                 >
-                  <Icon className="w-5 h-5 text-electric-light" />
-                  <span className="text-xs text-white/50">{label}</span>
+                  <Icon className="w-5 h-5 text-electric-light" strokeWidth={1.5} />
+                  <span className="text-[11px] sm:text-xs text-white/50 leading-snug">{label}</span>
                 </div>
               ))}
             </div>
@@ -227,12 +228,12 @@ export function ProductPage() {
         </div>
 
         {product.specs && (
-          <section className="mb-20">
-            <h2 className="font-display text-2xl font-bold mb-6">
+          <section className="mb-20 sm:mb-28 section-divider pt-16 sm:pt-20">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8">
               Specifications
             </h2>
-            <div className="glass rounded-2xl overflow-hidden">
-              <dl className="divide-y divide-white/10">
+            <div className="glass-strong rounded-2xl sm:rounded-3xl overflow-hidden">
+              <dl className="divide-y divide-white/[0.06]">
                 {Object.entries(product.specs).map(([key, value]) => (
                   <div
                     key={key}
@@ -249,13 +250,13 @@ export function ProductPage() {
           </section>
         )}
 
-        <section className="mb-20">
-          <h2 className="font-display text-2xl font-bold mb-6">
+        <section className="mb-20 sm:mb-28 section-divider pt-16 sm:pt-20">
+          <h2 className="font-display text-2xl sm:text-3xl font-bold mb-8">
             Customer Reviews
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-4 sm:space-y-5">
             {productReviews.map((review) => (
-              <div key={review.id} className="glass rounded-2xl p-6">
+              <div key={review.id} className="card-premium p-6 sm:p-8">
                 <div className="flex items-center justify-between mb-3">
                   <div>
                     <p className="font-semibold">{review.author}</p>
@@ -277,11 +278,11 @@ export function ProductPage() {
         </section>
 
         {related.length > 0 && (
-          <section>
-            <h2 className="font-display text-2xl font-bold mb-8">
+          <section className="section-divider pt-16 sm:pt-20">
+            <h2 className="font-display text-2xl sm:text-3xl font-bold mb-10 sm:mb-12">
               You May Also Like
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
               {related.map((p, i) => (
                 <ProductCard key={p.id} product={p} index={i} />
               ))}

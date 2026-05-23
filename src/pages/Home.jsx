@@ -1,4 +1,5 @@
 import { Hero } from '../components/sections/Hero';
+import { TrustBar } from '../components/sections/TrustBar';
 import { FeaturedProducts } from '../components/sections/FeaturedProducts';
 import { ProductShowcase } from '../components/sections/ProductShowcase';
 import { Collections } from '../components/sections/Collections';
@@ -11,6 +12,7 @@ export function Home() {
   return (
     <>
       <Hero />
+      <TrustBar />
       <FeaturedProducts />
       <ProductShowcase />
       <Collections />
