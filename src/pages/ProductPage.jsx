@@ -283,8 +283,8 @@ export function ProductPage() {
               You May Also Like
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-              {related.map((p, i) => (
-                <ProductCard key={p.id} product={p} index={i} />
+              {related.map((p) => (
+                <ProductCard key={p.id} product={p} />
               ))}
             </div>
           </section>

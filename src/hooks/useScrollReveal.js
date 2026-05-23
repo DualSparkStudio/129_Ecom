@@ -2,16 +2,7 @@
 export const easePremium = [0.22, 1, 0.36, 1];
 
 export const scrollReveal = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: easePremium },
-  },
-};
-
-export const scrollRevealSubtle = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 24 },
   visible: {
     opacity: 1,
     y: 0,
@@ -19,11 +10,20 @@ export const scrollRevealSubtle = {
   },
 };
 
-export const staggerContainer = {
-  hidden: { opacity: 0 },
+export const scrollRevealSubtle = {
+  hidden: { opacity: 0, y: 12 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, delayChildren: 0.12 },
+    y: 0,
+    transition: { duration: 0.5, ease: easePremium },
+  },
+};
+
+/** Parent wrapper — must NOT set opacity:0 on hidden or children stay invisible */
+export const staggerContainer = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.07, delayChildren: 0.05 },
   },
 };
 
@@ -43,6 +43,6 @@ export const scaleIn = {
 
 export const viewport = {
   once: true,
-  margin: '-60px',
-  amount: 0.2,
+  margin: '0px 0px -80px 0px',
+  amount: 0.1,
 };

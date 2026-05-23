@@ -6,7 +6,10 @@ import { staggerContainer, viewport } from '../../hooks/useScrollReveal';
 
 export function FeaturedProducts() {
   return (
-    <section id="shop" className="section-padding section-divider relative">
+    <section
+      id="shop"
+      className="relative px-5 sm:px-8 lg:px-10 pt-20 sm:pt-28 lg:pt-32 pb-0 sm:pb-20 lg:pb-32"
+    >
       <div className="container-custom">
         <SectionHeading
           label="Curated Selection"
@@ -19,10 +22,10 @@ export function FeaturedProducts() {
           initial="hidden"
           whileInView="visible"
           viewport={viewport}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-7 lg:gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-7 lg:gap-8"
         >
-          {products.map((product, index) => (
-            <ProductCard key={product.id} product={product} index={index} />
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} staggered />
           ))}
         </motion.div>
       </div>

@@ -6,7 +6,7 @@ import { formatPrice } from '../../utils/formatPrice';
 import { useCart } from '../../context/CartContext';
 import { scrollReveal, viewport } from '../../hooks/useScrollReveal';
 
-export function ProductCard({ product, index = 0 }) {
+export function ProductCard({ product, staggered = false }) {
   const { addItem } = useCart();
   const [added, setAdded] = useState(false);
 
@@ -21,14 +21,13 @@ export function ProductCard({ product, index = 0 }) {
   return (
     <motion.article
       variants={scrollReveal}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ ...viewport, margin: '-40px' }}
-      transition={{ delay: index * 0.06 }}
+      initial={staggered ? false : 'hidden'}
+      whileInView={staggered ? undefined : 'visible'}
+      viewport={staggered ? undefined : viewport}
       className="group relative"
     >
       <Link to={`/product/${product.id}`} className="block">
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl glass aspect-[4/5] mb-5 sm:mb-6">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl glass aspect-[4/5] mb-4 sm:mb-6">
           {product.badge && (
             <span className="absolute top-4 left-4 z-10 px-3 py-1.5 text-[11px] font-semibold tracking-wide uppercase rounded-full bg-electric/90 text-white backdrop-blur-sm">
               {product.badge}
@@ -45,7 +44,6 @@ export function ProductCard({ product, index = 0 }) {
             className="w-full h-full object-cover transition-transform duration-700 ease-premium sm:group-hover:scale-[1.04]"
           />
 
-          {/* Desktop: hover CTA | Mobile: always visible bar */}
           <div className="absolute inset-x-0 bottom-0 z-[2] p-3 sm:p-4 sm:opacity-0 sm:translate-y-2 sm:group-hover:opacity-100 sm:group-hover:translate-y-0 transition-all duration-400 ease-premium">
             <button
               type="button"
